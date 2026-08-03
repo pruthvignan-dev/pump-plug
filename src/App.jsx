@@ -62,12 +62,25 @@ const TYPE_STYLE = {
   EV: { accent: "#3FD0C9", label: "Electric", icon: Zap },
 };
 
-const CHARGING_PRESETS = [
-  { key: "home", label: "Home (own wallbox)", price: 0.32 },
-  { key: "newcustomer", label: "New-customer tariff", price: 0.26 },
-  { key: "public", label: "Public AC charging", price: 0.48 },
-  { key: "fast", label: "Public DC fast charging", price: 0.59 },
-];
+const CURRENCY_DEFAULTS = {
+  EUR: { symbol: "€", petrol: 2.08, diesel: 1.95, elec: 0.32 }, // Germany, ADAC Bundesdurchschnitt, Jul 2026
+  INR: { symbol: "₹", petrol: 102.12, diesel: 95.20, elec: 8.0 }, // Delhi, Aug 2026
+};
+
+const CHARGING_PRESETS_BY_CURRENCY = {
+  EUR: [
+    { key: "home", label: "Home (own wallbox)", price: 0.32 },
+    { key: "newcustomer", label: "New-customer tariff", price: 0.26 },
+    { key: "public", label: "Public AC charging", price: 0.48 },
+    { key: "fast", label: "Public DC fast charging", price: 0.59 },
+  ],
+  INR: [
+    { key: "home", label: "Home (domestic tariff)", price: 8.0 },
+    { key: "commercial", label: "Society / commercial charging", price: 12.0 },
+    { key: "public", label: "Public AC charging", price: 15.0 },
+    { key: "fast", label: "Public DC fast charging", price: 22.0 },
+  ],
+};
 
 function currencyFmt(n, symbol) {
   return `${symbol}${n.toFixed(2)}`;
@@ -75,11 +88,12 @@ function currencyFmt(n, symbol) {
 
 export default function FuelCompare() {
   const [cars, setCars] = useState(SEED_CARS);
-  const [petrolPrice, setPetrolPrice] = useState(2.08); // Super E10, ADAC Bundesdurchschnitt Jul 2026
-  const [dieselPrice, setDieselPrice] = useState(1.95); // ADAC Bundesdurchschnitt Jul 2026
-  const [elecPrice, setElecPrice] = useState(0.32); // blended household rate
-  const [chargingPreset, setChargingPreset] = useState("home");
-  const [currency, setCurrency] = useState("€");
+const [currencyCode, setCurrencyCode] = useState("EUR");
+const currency = CURRENCY_DEFAULTS[currencyCode].symbol;
+const [petrolPrice, setPetrolPrice] = useState(CURRENCY_DEFAULTS.EUR.petrol);
+const [dieselPrice, setDieselPrice] = useState(CURRENCY_DEFAULTS.EUR.diesel);
+const [elecPrice, setElecPrice] = useState(CURRENCY_DEFAULTS.EUR.elec);
+const [chargingPreset, setChargingPreset] = useState("home");
   const [distance, setDistance] = useState(100);
   const [segmentFilter, setSegmentFilter] = useState("All");
   const [typeFilter, setTypeFilter] = useState("All");
@@ -89,7 +103,13 @@ export default function FuelCompare() {
   const [newCar, setNewCar] = useState({ make: "", model: "", type: "Petrol", segment: "Compact", origin: "Chinese", consumption: "" });
 
   const priceFor = (type) => (type === "Petrol" ? petrolPrice : type === "Diesel" ? dieselPrice : elecPrice);
-
+const handleCurrencyChange = (code) => {
+  setCurrencyCode(code);
+  setPetrolPrice(CURRENCY_DEFAULTS[code].petrol);
+  setDieselPrice(CURRENCY_DEFAULTS[code].diesel);
+  setElecPrice(CURRENCY_DEFAULTS[code].elec);
+  setChargingPreset("home");
+};
   const rows = useMemo(() => {
     const scale = distance / 100;
     let list = cars.map((c) => ({
@@ -136,6 +156,7 @@ export default function FuelCompare() {
         .pill { border-radius: 999px; padding: 6px 14px; font-size: 13px; cursor: pointer; border: 1px solid #2E3338; background: #1C2024; color: #A8AFB6; transition: all .15s; }
         .pill.active { background: #EDEFF1; color: #14171A; border-color: #EDEFF1; }
         .row-hover:hover { background: #1A1E22; }
+    
       `}</style>
 
       {/* Header */}
@@ -174,7 +195,7 @@ export default function FuelCompare() {
           </label>
           <input className="price-input num" type="number" step="0.01" value={elecPrice} onChange={(e) => { setElecPrice(parseFloat(e.target.value) || 0); setChargingPreset("custom"); }} />
           <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginTop: 8 }}>
-            {CHARGING_PRESETS.map((p) => (
+            {CHARGING_PRESETS_BY_CURRENCY[currencyCode].map((p) => (
               <button
                 key={p.key}
                 onClick={() => { setElecPrice(p.price); setChargingPreset(p.key); }}
@@ -197,11 +218,14 @@ export default function FuelCompare() {
           <input className="price-input num" type="number" step="10" value={distance} onChange={(e) => setDistance(parseFloat(e.target.value) || 0)} />
         </div>
         <div>
-          <label style={{ display: "block", fontSize: 12, color: "#7C848C", marginBottom: 6, fontWeight: 600, textTransform: "uppercase", letterSpacing: 0.5 }}>
-            Currency symbol
-          </label>
-          <input className="price-input num" type="text" maxLength={3} value={currency} onChange={(e) => setCurrency(e.target.value || "€")} />
-        </div>
+  <label style={{ display: "block", fontSize: 12, color: "#7C848C", marginBottom: 6, fontWeight: 600, textTransform: "uppercase", letterSpacing: 0.5 }}>
+    Currency / market
+  </label>
+  <select className="price-input" value={currencyCode} onChange={(e) => handleCurrencyChange(e.target.value)}>
+    <option value="EUR">€ EUR — Germany</option>
+    <option value="INR">₹ INR — India</option>
+  </select>
+</div>
       </section>
 
       {/* Filters */}
