@@ -147,10 +147,10 @@ export default function FuelCompare() {
           </span>
         </div>
         <h1 className="num" style={{ fontSize: 34, fontWeight: 700, margin: 0, letterSpacing: -0.5 }}>
-          What does {distance} km actually cost — in Germany?
+          What does {distance} km actually cost?
         </h1>
         <p style={{ color: "#9298A0", marginTop: 6, fontSize: 15 }}>
-          Manufacturer WLTP consumption figures, priced against current German fuel and electricity rates — including BYD, MG, NIO and Xpeng alongside the usual German and European lineup. Recalculates instantly as you edit.
+          Manufacturer-rated consumption figures (WLTP for Europe, ARAI-adjusted for India), priced against current fuel and electricity rates — spanning German and European staples, Chinese EVs from BYD, MG, NIO and Xpeng, and popular Indian-market cars and EVs. Recalculates instantly as you edit.
         </p>
       </header>
 
