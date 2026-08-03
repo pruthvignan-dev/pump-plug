@@ -41,6 +41,19 @@ const SEED_CARS = [
   { id: "cn6", make: "NIO", model: "ET5", type: "EV", segment: "Sedan", origin: "Chinese", consumption: 17.0 },
   { id: "cn7", make: "Xpeng", model: "G6", type: "EV", segment: "SUV", origin: "Chinese", consumption: 17.9 },
   { id: "cn8", make: "Xpeng", model: "P7+ Standard Range", type: "EV", segment: "Sedan", origin: "Chinese", consumption: 16.4 },
+  // Indian-market cars — ARAI figures adjusted (+18% ICE, +30% EV) to be roughly comparable to WLTP-rated cars elsewhere in this list
+  { id: "in1", make: "Maruti Suzuki", model: "Swift 1.2 Petrol", type: "Petrol", segment: "Compact", origin: "Indian", consumption: 4.76 },
+  { id: "in2", make: "Maruti Suzuki", model: "Dzire 1.2 Petrol", type: "Petrol", segment: "Compact", origin: "Indian", consumption: 4.59 },
+  { id: "in3", make: "Maruti Suzuki", model: "Baleno 1.2 Petrol", type: "Petrol", segment: "Compact", origin: "Indian", consumption: 5.27 },
+  { id: "in4", make: "Tata", model: "Nexon 1.2 Turbo Petrol", type: "Petrol", segment: "SUV", origin: "Indian", consumption: 6.76 },
+  { id: "in5", make: "Tata", model: "Nexon 1.5 Diesel", type: "Diesel", segment: "SUV", origin: "Indian", consumption: 4.90 },
+  { id: "in6", make: "Hyundai", model: "Creta 1.5 Petrol", type: "Petrol", segment: "SUV", origin: "Korean", consumption: 6.78 },
+  { id: "in7", make: "Hyundai", model: "Creta 1.5 Diesel", type: "Diesel", segment: "SUV", origin: "Korean", consumption: 5.42 },
+  // Indian EVs
+  { id: "in8", make: "Tata", model: "Nexon EV Long Range", type: "EV", segment: "SUV", origin: "Indian", consumption: 11.96 },
+  { id: "in9", make: "Tata", model: "Nexon EV Medium Range", type: "EV", segment: "SUV", origin: "Indian", consumption: 14.17 },
+  { id: "in10", make: "Tata", model: "Punch EV Long Range", type: "EV", segment: "SUV", origin: "Indian", consumption: 12.48 },
+  { id: "in11", make: "MG", model: "Windsor EV", type: "EV", segment: "SUV", origin: "Chinese", consumption: 14.82 },
 ];
 
 const TYPE_STYLE = {
