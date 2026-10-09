@@ -24,8 +24,8 @@ const SEED_CARS = [
   { id: "c8", make: "Toyota", model: "RAV4 Hybrid", type: "Petrol", segment: "SUV", origin: "Japanese", consumption: 5.0 },
   { id: "c9", make: "Volkswagen", model: "Tiguan 2.0 TDI", type: "Diesel", segment: "SUV", origin: "German", consumption: 5.7 },
   // European / Korean / American EVs
-  { id: "e1", make: "Tesla", model: "Model 3 RWD", type: "EV", segment: "Sedan", origin: "American", consumption: 13.2 },
-  { id: "e2", make: "Tesla", model: "Model Y RWD", type: "EV", segment: "SUV", origin: "American", consumption: 14.7 },
+  { id: "e1", make: "Tesla", model: "Model 3 RWD", type: "EV", segment: "Sedan", origin: "American", consumption: 12.2 },
+  { id: "e2", make: "Tesla", model: "Model Y RWD", type: "EV", segment: "SUV", origin: "American", consumption: 14.0 },
   { id: "e3", make: "Volkswagen", model: "ID.3 Pro", type: "EV", segment: "Compact", origin: "German", consumption: 15.4 },
   { id: "e4", make: "Volkswagen", model: "ID.4", type: "EV", segment: "SUV", origin: "German", consumption: 16.3 },
   { id: "e5", make: "Hyundai", model: "Ioniq 5", type: "EV", segment: "SUV", origin: "Korean", consumption: 16.8 },
@@ -58,7 +58,7 @@ const SEED_CARS = [
 
 const TYPE_STYLE = {
   Petrol: { accent: "#E8A33D", label: "Petrol", icon: Fuel },
-  Diesel: { accent: "#C97B3F", label: "Diesel", icon: Fuel },
+  Diesel: { accent: "#9D6FE0", label: "Diesel", icon: Fuel },
   EV: { accent: "#3FD0C9", label: "Electric", icon: Zap },
 };
 
@@ -184,7 +184,7 @@ const handleCurrencyChange = (code) => {
           <input className="price-input num" type="number" step="0.01" value={petrolPrice} onChange={(e) => setPetrolPrice(parseFloat(e.target.value) || 0)} />
         </div>
         <div>
-          <label style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 12, color: "#C97B3F", marginBottom: 6, fontWeight: 600, textTransform: "uppercase", letterSpacing: 0.5 }}>
+          <label style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 12, color: "#9D6FE0", marginBottom: 6, fontWeight: 600, textTransform: "uppercase", letterSpacing: 0.5 }}>
             <Fuel size={14} /> Diesel / {currency} per L
           </label>
           <input className="price-input num" type="number" step="0.01" value={dieselPrice} onChange={(e) => setDieselPrice(parseFloat(e.target.value) || 0)} />
